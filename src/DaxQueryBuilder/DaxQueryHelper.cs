@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using DaxQueryBuilder.Extensions;
 
 namespace DaxQueryBuilder
 { 
     public static class DaxQueryHelper
     {
-        public static string ApplyFilterIn(string table , string column, params string[] values)
+        public static string ApplyFilterIn(string table, string column, params string[] values)
         {
             CheckTableAndColumn(table, column);
 
@@ -21,20 +22,21 @@ namespace DaxQueryBuilder
         public static string ApplyFilterIsEqual(string table, string column, string value)
         {
             CheckTableAndColumn(table, column);
+            _ = value ?? throw new ArgumentNullException(nameof(value));
 
             return $"KEEPFILTERS(TREATAS( {{\"{value}\"}}, {table}[{column}]))";
         }
 
         private static void CheckTableAndColumn(string table, string column)
         {
-            if (string.IsNullOrEmpty(table))
+            if (table.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new ArgumentNullException(nameof(table));
+                throw new ArgumentException("value with null, empty or white spaces not valid", nameof(table));
             }
 
-            if (string.IsNullOrEmpty(column))
+            if (column.IsNullOrEmptyOrWhiteSpace())
             {
-                throw new ArgumentNullException(nameof(column));
+                throw new ArgumentException("value with null, empty or white spaces not valid", nameof(column));
             }
         }
     }

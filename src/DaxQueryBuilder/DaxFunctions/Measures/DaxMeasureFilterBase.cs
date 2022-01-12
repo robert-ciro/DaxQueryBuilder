@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DaxQueryBuilder.DaxFunctions
+namespace DaxQueryBuilder.DaxFunctions.Measures
 {
     public abstract class DaxMeasureFilterBase
     {
